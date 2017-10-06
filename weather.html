@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Weather Forcast</title>
+    <link rel="stylesheet" type="text/css" href="weather.css">
+</head>
+
+<body>
+    <div class="weather" id="weatherWidget">
+        <div class="weather-loc" id="location"></div>
+        <div class="weather-humidity" id="humidity"></div>
+        <div class="weather-temp" id="temp"></div>
+        <img class="weather-tomorrow" id="tomorrow" />
+        <img class="weather-dayaftertomorrow" id="dayaftertomorrow" />
+        <button id="change">Change city</button>
+    </div>
+
+    <script type="text/javascript">
+
+    function fetchWeather() {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open("GET", "https://classes.engineering.wustl.edu/cse330/content/weather_json.php", true);
+        xmlHttp.addEventListener("load", getWeather, false);
+        xmlHttp.send(null);
+    }
+
+    function getWeather(evnet) {
+    	var jsonobj = JSON.parse(event.target.responseText);
+    	var city = jsonobj.location.city;
+    	var state = jsonobj.location.state;
+    	var humidity = jsonobj.atmosphere.humidity;
+    	var temp = jsonobj.current.temp;
+    	var tomorrow = jsonobj.tomorrow.code;
+    	var dayaftertomorrow = jsonobj.dayafter.code;
+    	lochtml = "<strong>" + city + "</strong> " + state;
+    	document.getElementById("location").innerHTML = lochtml;
+    	document.getElementById("humidity").innerHTML = humidity;
+    	document.getElementById("temp").innerHTML = temp;
+    	var tomorrowhtml = 'http://us.yimg.com/i/us/nws/weather/gr/' + tomorrow + 'ds.png';
+    	var dayafterhtml = 'http://us.yimg.com/i/us/nws/weather/gr/' + dayaftertomorrow + 'ds.png';
+    	document.getElementById("tomorrow").setAttribute("src", tomorrowhtml);
+    	document.getElementById("dayaftertomorrow").setAttribute("src", dayafterhtml);
+    }
+    document.addEventListener("DOMContentLoaded", fetchWeather, false);
+    document.getElementById("change").addEventListener("click", fetchWeather, false);
+    </script>
+</body>
+
+</html>
