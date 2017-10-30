@@ -9,8 +9,8 @@ for (var i = 0; i < op.length; i++) {
 	}, false);
 }
 function calculate(){
-	var para1 = document.getElementById("para1").value;
-	var para2 = document.getElementById("para2").value;
+	var para1 = parseFloat(document.getElementById("para1").value);
+	var para2 = parseFloat(document.getElementById("para2").value);
 	result = 0;
 	var iscal = false;
 	switch (curr_op){
@@ -19,7 +19,7 @@ function calculate(){
 			iscal = true;
 			break;
 		case '-':
-			result = para1 + para2;
+			result = para1 - para2;
 			iscal = true;
 			break;
 		case '*':
